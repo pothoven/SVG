@@ -1,0 +1,135 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:svg="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Simple SVG test</title>
+
+<!--  <script src="jscript/firebug/firebug.js" type='text/JavaScript'></script> -->
+<style type="text/css">
+fieldset {
+	-moz-border-radius: 8px;
+}
+</style>
+<script type="text/javascript">
+// <![CDATA[
+	var svg = {};
+	
+	window.onload=function(){
+		if (window.ActiveXObject && typeof svg.svgDocument == "undefined") {
+			initializeSVG();
+		}
+    };
+
+	function initializeSVG(event) {
+		if (event) {
+			svg.svgDocument = event.target.ownerDocument;
+			svg.rootNode = event.target; // this.svgDocument.firstChild;
+			svg.baseNode = event.target.ownerDocument.getElementById("svgBase");
+		} else {
+			var svgDocument = document.getElementById("SVG").getSVGDocument();
+			svg = {'svgDocument' : svgDocument,
+				   'rootNode' : svgDocument.rootElement,
+				   'baseNode' : svgDocument.getElementById("svgBase")};
+		}
+	}
+
+function addCircle(x,y,radius,color,id) {
+	removeCircle(id);
+	if (typeof svg.svgDocument.createElementNS != "undefined") {
+		var circleElem = svg.svgDocument.createElementNS('http://www.w3.org/2000/svg', 'circle');
+	} else {
+		var circleElem = svg.svgDocument.createElement('svg:circle');
+	}
+	circleElem.setAttribute("fill-opacity", "0.7");
+	circleElem.setAttribute("stroke", "black");
+	circleElem.setAttribute("stroke-width", "0.1cm");
+	circleElem.setAttribute("cx", x);
+	circleElem.setAttribute("cy", y);
+	circleElem.setAttribute("r", radius);
+	circleElem.setAttribute("fill", color);
+	circleElem.setAttribute("id", id);
+	circleElem.setAttribute("onmouseover", "select('"+id+"')");
+	circleElem.setAttribute("onmouseout", "deselect('"+id+"')");
+	circleElem.setAttribute("onclick", "removeCircle('"+id+"')");
+    svg.baseNode.appendChild(circleElem);
+}
+
+
+
+function removeCircle(circleId) {
+	var circleElem = svg.svgDocument.getElementById(circleId);
+	if (circleElem) {
+		svg.baseNode.removeChild(circleElem);
+	}
+}
+
+// select
+//
+// Select an item in the SVG
+//
+function select(id) { 
+	try {
+		svgTarget = svg.svgDocument.getElementById(id);
+		if (svgTarget) {
+			svgOriginalItemColor = svgTarget.getAttribute('fill');
+			svgTarget.setAttribute('fill', "#CCE5FF");
+		}
+	} catch (e) { }
+}
+
+// deselect
+//
+// deselect a currently selected item in both the SVG and HTML table
+function deselect(id) { 
+	try {
+		svgTarget = svg.svgDocument.getElementById(id);
+		if (svgTarget) {
+			svgTarget.setAttribute('fill', svgOriginalItemColor);
+		}
+	} catch (e) { }
+}
+
+// ]]>
+</script>
+<!-- Make IE associate the svg namespace with the SVG viewer -->
+<object id="AdobeSVG" classid="clsid:78156a80-c6a1-4bbf-8e6a-3cd390eeb4e2"></object>
+<?import namespace="svg" implementation="#AdobeSVG"?>
+
+</head>
+<body>
+<form>
+<div id="chart">
+<fieldset style="width: 600px;">
+ <svg:svg baseProfile="full" id="SVG" onload="initializeSVG(evt);" width="600" height="375" viewBox="0 0 600 375">
+	<svg:defs>
+		<svg:linearGradient id="blue2white">
+			<svg:stop style="stop-color: #99bbee" offset="0%" />
+			<svg:stop style="stop-color: white" offset="100%" />
+		</svg:linearGradient>
+		<svg:linearGradient y2="100%" x2="0%" y1="0%" x1="0%" xlink:href="#blue2white" id="b2w-down" />
+		<svg:linearGradient y2="0%" x2="0%" y1="100%" x1="0%" xlink:href="#blue2white" id="b2w-up" />
+		<svg:linearGradient y2="0%" x2="0%" y1="0%" x1="100%" xlink:href="#blue2white" id="b2w-right2left" />
+		<svg:linearGradient y2="0%" x2="100%" y1="0%" x1="0%" xlink:href="#blue2white" id="b2w-left2right" />
+		<svg:linearGradient y2="100%" x2="100%" y1="0%" x1="0%" xlink:href="#blue2white" id="b2w-diagonal" />
+	</svg:defs>
+
+	<!--Add gradient background coloring -->
+	<svg:rect x="0" y="0" width="100%" height="100%" style="fill: url(#b2w-down)" />
+
+	<svg:g id="svgBase">
+	</svg:g>
+</svg:svg></fieldset>
+</div>
+<p style="clear:both; ">&#160;</p>
+<fieldset style="width: 250px;"><legend>Add</legend> <input type="button"
+	onclick="addCircle(284,145,100,'red','redcircle')" value="Red" /> <input type="button"
+	onclick="addCircle(214,245,100,'green','greencircle')" value="Green" /> <input type="button"
+	onclick="addCircle(354,245,100,'blue','bluecircle')" value="Blue" /></fieldset>
+<fieldset style="width: 250px;"><legend>Remove</legend> <input type="button"
+	onclick="removeCircle('redcircle')" value="Red" /> <input type="button" onclick="removeCircle('greencircle')"
+	value="Green" /> <input type="button" onclick="removeCircle('bluecircle')" value="Blue" /> </fieldset>
+<a onclick="document.getElementById('chart').style.display='none';">hide</a>
+<a onclick="document.getElementById('chart').style.display='';">show</a>
+</form>
+</body>
+</html>

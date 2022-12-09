@@ -1,0 +1,242 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:svg="http://www.w3.org/2000/svg">
+  <head>
+    <title>SVG in IE using VML</title>
+		<script type="text/javascript" src="iesvg.js"></script>
+	  <script>
+      window.onload = function() { ieSVGInit(); }
+    </script>
+  </head>
+  <body style="position:absolute; z-index:0;" ondblclick="alert(document.documentElement.outerHTML);">
+
+<svg:svg xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="full" width="300" height="100" viewBox="0 0 906 381">
+<svg:defs>
+<svg:filter id="3D-look">
+<!--Drop Shadow-->
+<svg:feGaussianBlur result="blur" stdDeviation="2" in="SourceAlpha"/>
+<svg:feOffset result="offsetBlur" dy="2" dx="2" in="blur"/>
+<!--Emboss-->
+<svg:feSpecularLighting kernelUnitLength="1" result="spec" specularExponent="40" specularConstant="1" style="lighting-color:white" surfaceScale="-1" in="blur">
+<svg:feDistantLight elevation="45" azimuth="45"/>
+</svg:feSpecularLighting>
+<svg:feMerge>
+<svg:feMergeNode in="offsetBlur"/>
+<svg:feMergeNode in="SourceGraphic"/>
+<svg:feMergeNode in="spec"/>
+</svg:feMerge>
+</svg:filter>
+</svg:defs>
+<!--Scale drawing to prefered size-->
+<svg:g>
+<!--Draw the chart and position it at the chart origin-->
+<svg:g transform="translate(30,0)">
+<!--Draw lines with rounded ends and corners-->
+<svg:g style="fill: none; stroke-linecap: round; stroke-linejoin: round;">
+<!--Draw dark black lines-->
+<svg:g style="stroke:black; stroke-width:3;">
+<!--Draw the main Y axis-->
+<svg:line x1="0" y1="0" x2="0" y2="300"/>
+<!--Draw the main X axis-->
+<svg:line x1="0" y1="300" x2="800" y2="300"/>
+</svg:g>
+<!--Draw grey dotted lines-->
+<svg:g style="stroke: #B0B0B0; stroke-width:1; stroke-dasharray:9 5;">
+<!--Top line-->
+<svg:line x1="0" y1="0" x2="800" y2="0"/>
+<!--Halfway line-->
+<svg:line x1="0" y1="150" x2="800" y2="150"/>
+</svg:g>
+</svg:g>
+<!--Draw graph bars-->
+<!--Calculate values for this bar-->
+<!--Draw this bar-->
+<svg:g filter="url(#3D-look)">
+<svg:rect x="5" y="280.86" height="19.14" width="35" fill="rgb(16,239,0)" id="1" onmouseover="evt.target.setAttribute('fill', 'blue');parent.highlightRow(1);" onmouseout="evt.target.setAttribute('fill','rgb(16,239,0)');parent.highlightRow(-1);"/>
+</svg:g>
+<!--Add X-axis label for this bar-->
+<svg:g transform="rotate(45,22.5,310)">
+<svg:text style="fill:black; stroke:none;" textLength="100" lengthAdjust="spacing" x="22.5" y="310">2006-11-06</svg:text>
+</svg:g>
+<!--Calculate values for this bar-->
+<!--Draw this bar-->
+<svg:g filter="url(#3D-look)">
+<svg:rect x="45" y="275.97" height="24.03" width="35" fill="rgb(20,235,0)" id="2" onmouseover="evt.target.setAttribute('fill', 'blue');parent.highlightRow(2);" onmouseout="evt.target.setAttribute('fill','rgb(20,235,0)');parent.highlightRow(-1);"/>
+</svg:g>
+<!--Add X-axis label for this bar-->
+<svg:g transform="rotate(45,62.5,310)">
+<svg:text style="fill:black; stroke:none;" textLength="100" lengthAdjust="spacing" x="62.5" y="310">2006-11-07</svg:text>
+</svg:g>
+<!--Calculate values for this bar-->
+<!--Draw this bar-->
+<svg:g filter="url(#3D-look)">
+<svg:rect x="85" y="284.91" height="15.09" width="35" fill="rgb(13,242,0)" id="3" onmouseover="evt.target.setAttribute('fill', 'blue');parent.highlightRow(3);" onmouseout="evt.target.setAttribute('fill','rgb(13,242,0)');parent.highlightRow(-1);"/>
+</svg:g>
+<!--Add X-axis label for this bar-->
+<svg:g transform="rotate(45,102.5,310)">
+<svg:text style="fill:black; stroke:none;" textLength="100" lengthAdjust="spacing" x="102.5" y="310">2006-11-12</svg:text>
+</svg:g>
+<!--Calculate values for this bar-->
+<!--Draw this bar-->
+<svg:g filter="url(#3D-look)">
+<svg:rect x="125" y="277.35" height="22.65" width="35" fill="rgb(19,236,0)" id="4" onmouseover="evt.target.setAttribute('fill', 'blue');parent.highlightRow(4);" onmouseout="evt.target.setAttribute('fill','rgb(19,236,0)');parent.highlightRow(-1);"/>
+</svg:g>
+<!--Add X-axis label for this bar-->
+<svg:g transform="rotate(45,142.5,310)">
+<svg:text style="fill:black; stroke:none;" textLength="100" lengthAdjust="spacing" x="142.5" y="310">2006-11-13</svg:text>
+</svg:g>
+<!--Calculate values for this bar-->
+<!--Draw this bar-->
+<svg:g filter="url(#3D-look)">
+<svg:rect x="165" y="264.51" height="35.49" width="35" fill="rgb(30,225,0)" id="5" onmouseover="evt.target.setAttribute('fill', 'blue');parent.highlightRow(5);" onmouseout="evt.target.setAttribute('fill','rgb(30,225,0)');parent.highlightRow(-1);"/>
+</svg:g>
+<!--Add X-axis label for this bar-->
+<svg:g transform="rotate(45,182.5,310)">
+<svg:text style="fill:black; stroke:none;" textLength="100" lengthAdjust="spacing" x="182.5" y="310">2006-11-11</svg:text>
+</svg:g>
+<!--Calculate values for this bar-->
+<!--Draw this bar-->
+<svg:g filter="url(#3D-look)">
+<svg:rect x="205" y="282.63" height="17.37" width="35" fill="rgb(15,240,0)" id="6" onmouseover="evt.target.setAttribute('fill', 'blue');parent.highlightRow(6);" onmouseout="evt.target.setAttribute('fill','rgb(15,240,0)');parent.highlightRow(-1);"/>
+</svg:g>
+<!--Add X-axis label for this bar-->
+<svg:g transform="rotate(45,222.5,310)">
+<svg:text style="fill:black; stroke:none;" textLength="100" lengthAdjust="spacing" x="222.5" y="310">2006-11-18</svg:text>
+</svg:g>
+<!--Calculate values for this bar-->
+<!--Draw this bar-->
+<svg:g filter="url(#3D-look)">
+<svg:rect x="245" y="280.8" height="19.200000000000003" width="35" fill="rgb(16,239,0)" id="7" onmouseover="evt.target.setAttribute('fill', 'blue');parent.highlightRow(7);" onmouseout="evt.target.setAttribute('fill','rgb(16,239,0)');parent.highlightRow(-1);"/>
+</svg:g>
+<!--Add X-axis label for this bar-->
+<svg:g transform="rotate(45,262.5,310)">
+<svg:text style="fill:black; stroke:none;" textLength="100" lengthAdjust="spacing" x="262.5" y="310">2006-11-04</svg:text>
+</svg:g>
+<!--Calculate values for this bar-->
+<!--Draw this bar-->
+<svg:g filter="url(#3D-look)">
+<svg:rect x="285" y="276.45" height="23.549999999999997" width="35" fill="rgb(20,235,0)" id="8" onmouseover="evt.target.setAttribute('fill', 'blue');parent.highlightRow(8);" onmouseout="evt.target.setAttribute('fill','rgb(20,235,0)');parent.highlightRow(-1);"/>
+</svg:g>
+<!--Add X-axis label for this bar-->
+<svg:g transform="rotate(45,302.5,310)">
+<svg:text style="fill:black; stroke:none;" textLength="100" lengthAdjust="spacing" x="302.5" y="310">2006-11-08</svg:text>
+</svg:g>
+<!--Calculate values for this bar-->
+<!--Draw this bar-->
+<svg:g filter="url(#3D-look)">
+<svg:rect x="325" y="276.09" height="23.91" width="35" fill="rgb(20,235,0)" id="9" onmouseover="evt.target.setAttribute('fill', 'blue');parent.highlightRow(9);" onmouseout="evt.target.setAttribute('fill','rgb(20,235,0)');parent.highlightRow(-1);"/>
+</svg:g>
+<!--Add X-axis label for this bar-->
+<svg:g transform="rotate(45,342.5,310)">
+<svg:text style="fill:black; stroke:none;" textLength="100" lengthAdjust="spacing" x="342.5" y="310">2006-11-20</svg:text>
+</svg:g>
+<!--Calculate values for this bar-->
+<!--Draw this bar-->
+<svg:g filter="url(#3D-look)">
+<svg:rect x="365" y="278.19" height="21.81" width="35" fill="rgb(19,236,0)" id="10" onmouseover="evt.target.setAttribute('fill', 'blue');parent.highlightRow(10);" onmouseout="evt.target.setAttribute('fill','rgb(19,236,0)');parent.highlightRow(-1);"/>
+</svg:g>
+<!--Add X-axis label for this bar-->
+<svg:g transform="rotate(45,382.5,310)">
+<svg:text style="fill:black; stroke:none;" textLength="100" lengthAdjust="spacing" x="382.5" y="310">2006-11-02</svg:text>
+</svg:g>
+<!--Calculate values for this bar-->
+<!--Draw this bar-->
+<svg:g filter="url(#3D-look)">
+<svg:rect x="405" y="280.35" height="19.65" width="35" fill="rgb(17,238,0)" id="11" onmouseover="evt.target.setAttribute('fill', 'blue');parent.highlightRow(11);" onmouseout="evt.target.setAttribute('fill','rgb(17,238,0)');parent.highlightRow(-1);"/>
+</svg:g>
+<!--Add X-axis label for this bar-->
+<svg:g transform="rotate(45,422.5,310)">
+<svg:text style="fill:black; stroke:none;" textLength="100" lengthAdjust="spacing" x="422.5" y="310">2006-11-15</svg:text>
+</svg:g>
+<!--Calculate values for this bar-->
+<!--Draw this bar-->
+<svg:g filter="url(#3D-look)">
+<svg:rect x="445" y="280.14" height="19.86" width="35" fill="rgb(17,238,0)" id="12" onmouseover="evt.target.setAttribute('fill', 'blue');parent.highlightRow(12);" onmouseout="evt.target.setAttribute('fill','rgb(17,238,0)');parent.highlightRow(-1);"/>
+</svg:g>
+<!--Add X-axis label for this bar-->
+<svg:g transform="rotate(45,462.5,310)">
+<svg:text style="fill:black; stroke:none;" textLength="100" lengthAdjust="spacing" x="462.5" y="310">2006-11-17</svg:text>
+</svg:g>
+<!--Calculate values for this bar-->
+<!--Draw this bar-->
+<svg:g filter="url(#3D-look)">
+<svg:rect x="485" y="250.38" height="49.62" width="35" fill="rgb(42,213,0)" id="13" onmouseover="evt.target.setAttribute('fill', 'blue');parent.highlightRow(13);" onmouseout="evt.target.setAttribute('fill','rgb(42,213,0)');parent.highlightRow(-1);"/>
+</svg:g>
+<!--Add X-axis label for this bar-->
+<svg:g transform="rotate(45,502.5,310)">
+<svg:text style="fill:black; stroke:none;" textLength="100" lengthAdjust="spacing" x="502.5" y="310">2006-11-10</svg:text>
+</svg:g>
+<!--Calculate values for this bar-->
+<!--Draw this bar-->
+<svg:g filter="url(#3D-look)">
+<svg:rect x="525" y="284.88" height="15.120000000000001" width="35" fill="rgb(13,242,0)" id="14" onmouseover="evt.target.setAttribute('fill', 'blue');parent.highlightRow(14);" onmouseout="evt.target.setAttribute('fill','rgb(13,242,0)');parent.highlightRow(-1);"/>
+</svg:g>
+<!--Add X-axis label for this bar-->
+<svg:g transform="rotate(45,542.5,310)">
+<svg:text style="fill:black; stroke:none;" textLength="100" lengthAdjust="spacing" x="542.5" y="310">2006-11-19</svg:text>
+</svg:g>
+<!--Calculate values for this bar-->
+<!--Draw this bar-->
+<svg:g filter="url(#3D-look)">
+<svg:rect x="565" y="276.75" height="23.25" width="35" fill="rgb(20,235,0)" id="15" onmouseover="evt.target.setAttribute('fill', 'blue');parent.highlightRow(15);" onmouseout="evt.target.setAttribute('fill','rgb(20,235,0)');parent.highlightRow(-1);"/>
+</svg:g>
+<!--Add X-axis label for this bar-->
+<svg:g transform="rotate(45,582.5,310)">
+<svg:text style="fill:black; stroke:none;" textLength="100" lengthAdjust="spacing" x="582.5" y="310">2006-11-01</svg:text>
+</svg:g>
+<!--Calculate values for this bar-->
+<!--Draw this bar-->
+<svg:g filter="url(#3D-look)">
+<svg:rect x="605" y="284.07" height="15.93" width="35" fill="rgb(14,241,0)" id="16" onmouseover="evt.target.setAttribute('fill', 'blue');parent.highlightRow(16);" onmouseout="evt.target.setAttribute('fill','rgb(14,241,0)');parent.highlightRow(-1);"/>
+</svg:g>
+<!--Add X-axis label for this bar-->
+<svg:g transform="rotate(45,622.5,310)">
+<svg:text style="fill:black; stroke:none;" textLength="100" lengthAdjust="spacing" x="622.5" y="310">2006-11-05</svg:text>
+</svg:g>
+<!--Calculate values for this bar-->
+<!--Draw this bar-->
+<svg:g filter="url(#3D-look)">
+<svg:rect x="645" y="291.84" height="8.16" width="35" fill="rgb(7,248,0)" id="17" onmouseover="evt.target.setAttribute('fill', 'blue');parent.highlightRow(17);" onmouseout="evt.target.setAttribute('fill','rgb(7,248,0)');parent.highlightRow(-1);"/>
+</svg:g>
+<!--Add X-axis label for this bar-->
+<svg:g transform="rotate(45,662.5,310)">
+<svg:text style="fill:black; stroke:none;" textLength="100" lengthAdjust="spacing" x="662.5" y="310">2006-11-14</svg:text>
+</svg:g>
+<!--Calculate values for this bar-->
+<!--Draw this bar-->
+<svg:g filter="url(#3D-look)">
+<svg:rect x="685" y="276.3" height="23.700000000000003" width="35" fill="rgb(20,235,0)" id="18" onmouseover="evt.target.setAttribute('fill', 'blue');parent.highlightRow(18);" onmouseout="evt.target.setAttribute('fill','rgb(20,235,0)');parent.highlightRow(-1);"/>
+</svg:g>
+<!--Add X-axis label for this bar-->
+<svg:g transform="rotate(45,702.5,310)">
+<svg:text style="fill:black; stroke:none;" textLength="100" lengthAdjust="spacing" x="702.5" y="310">2006-11-03</svg:text>
+</svg:g>
+<!--Calculate values for this bar-->
+<!--Draw this bar-->
+<svg:g filter="url(#3D-look)">
+<svg:rect x="725" y="281.37" height="18.63" width="35" fill="rgb(16,239,0)" id="19" onmouseover="evt.target.setAttribute('fill', 'blue');parent.highlightRow(19);" onmouseout="evt.target.setAttribute('fill','rgb(16,239,0)');parent.highlightRow(-1);"/>
+</svg:g>
+<!--Add X-axis label for this bar-->
+<svg:g transform="rotate(45,742.5,310)">
+<svg:text style="fill:black; stroke:none;" textLength="100" lengthAdjust="spacing" x="742.5" y="310">2006-11-09</svg:text>
+</svg:g>
+<!--Calculate values for this bar-->
+<!--Draw this bar-->
+<svg:g filter="url(#3D-look)">
+<svg:rect x="765" y="276.42" height="23.580000000000002" width="35" fill="rgb(20,235,0)" id="20" onmouseover="evt.target.setAttribute('fill', 'blue');parent.highlightRow(20);" onmouseout="evt.target.setAttribute('fill','rgb(20,235,0)');parent.highlightRow(-1);"/>
+</svg:g>
+<!--Add X-axis label for this bar-->
+<svg:g >
+<svg:text transform="rotate(45,782.5,310)" style="fill:black; stroke:none;" textLength="100" lengthAdjust="spacing" x="782.5" y="310">2006-11-16</svg:text>
+</svg:g>
+</svg:g>
+<!--Add Y-axis labels-->
+<svg:g transform="translate(25, 12)" style="fill:black; stroke:none; text-anchor: end; baseline-shift: sub;">
+<svg:text x="0" y="0">100</svg:text>
+<svg:text x="0" y="150">50</svg:text>
+<svg:text x="0" y="300">0</svg:text>
+</svg:g>
+</svg:g>
+</svg:svg>
+
+
+</body>
+</html>

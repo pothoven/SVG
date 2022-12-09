@@ -1,0 +1,28 @@
+<!DOCTYPE svg>
+<svg width="436px" height="327px" viewBox="0 0 4360 3270">
+ <rect x="40" y="30" width="4320" height="3240" style="fill:silver;" />
+ <rect x="3" y="3" width="4314" height="3234" style="fill:white; stroke-width:6; stroke:black" />
+ <g style="fill:#FFFFFF; stroke-width:0; stroke:black">
+  <rect x="40" y="40" width="4240" height="3160" />
+ </g>
+ <g style="fill:#000080; font-family:Times New Roman;font-style:italic; font-size:180; " >
+  <text x="400" y="456">Sample</text>
+  <text x="400" y="656">Piechart</text>
+ </g>
+ <path style="stroke:black; stroke-width:0.5;  fill:#DBDBED; " d="M 2250 1590 L 2935 1986 A 791 791 0 0 0 2250 799 z"/>
+ <path d=" M 3038 1135 L 2867 1234" style="stroke:#000000; stroke-width:7; stroke-linejoin:round; stroke-linecap:round; fill:none; "/>
+ <text x="3071" y="1163" style="font-family:Arial;font-size:110; ">Scotland</text>
+ <path style="stroke:black; stroke-width:0.5;  fill:#AA5555; " d="M 2250 1590 L 1979 2333 A 791 791 0 0 0 2935 1986 z"/>
+ <path d=" M 3071 1163 M 2561 2445 L 2493 2259" style="stroke:#000000; stroke-width:7; stroke-linejoin:round; stroke-linecap:round; fill:none; "/>
+ <text x="2594" y="2472" style="font-family:Arial;font-size:110; ">Ireland</text>
+ <path style="stroke:black; stroke-width:0.5;  fill:#F2F8F8; " d="M 2129 1692 L 1350 1829 A 791 791 0 0 0 1858 2435 z"/>
+ <path d=" M 2594 2472 M 1432 2276 L 1583 2149" style="stroke:#000000; stroke-width:7; stroke-linejoin:round; stroke-linecap:round; fill:none; "/>
+ <text x="1410" y="2304" style="font-family:Arial;font-size:110; text-anchor:end; ">England</text>
+ <path style="stroke:black; stroke-width:0.5;  fill:#8BC58B; " d="M 2250 1590 L 1742 984 A 791 791 0 0 0 1471 1727 z"/>
+ <path d=" M 1410 2304 M 1395 1279 L 1581 1347" style="stroke:#000000; stroke-width:7; stroke-linejoin:round; stroke-linecap:round; fill:none; "/>
+ <text x="1373" y="1306" style="font-family:Arial;font-size:110; text-anchor:end; ">Wales</text>
+ <path style="stroke:black; stroke-width:0.5;  fill:#EDDBED; " d="M 2250 1590 L 2250 799 A 791 791 0 0 0 1742 984 z"/>
+ <path d=" M 1373 1306 M 1939 735 L 2007 921" style="stroke:#000000; stroke-width:7; stroke-linejoin:round; stroke-linecap:round; fill:none; "/>
+ <text x="1917" y="763" style="font-family:Arial;font-size:110; text-anchor:end; ">Cornwall</text>
+</svg>
+

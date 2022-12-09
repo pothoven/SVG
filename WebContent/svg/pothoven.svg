@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	width="143" height="59">
+
+<filter id="dropShadow" filterUnits="objectBoundingBox">
+	<feGaussianBlur in="SourceAlpha" stdDeviation="2" />
+	<feOffset dx="2" dy="2" />
+	<feComponentTransfer result="shadow">
+		<feFuncA type="linear" slope=".5" intercept="0" />
+	</feComponentTransfer>
+</filter>
+
+<filter id="emboss">
+	<feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur" />
+	<feSpecularLighting in="blur" surfaceScale="-1" style="lighting-color:white"
+						specularConstant="1" specularExponent="16" result="spec" 
+						kernelUnitLength="1" >
+		<feDistantLight azimuth="45" elevation="45" />
+	</feSpecularLighting>
+	<feComposite in="spec" in2="SourceGraphic" operator="in" result="specOut" />
+</filter>
+
+<g style="font-size: 21; font-weight:bold; fill:blue">
+	<text x="10" y="20" style="filter:url(#dropShadow)">pothoven.net</text>
+	<text x="10" y="20" style="fill: blue:">pothoven.net</text>
+	<text x="10" y="20" style="filter:url(#emboss)">pothoven.net</text>
+</g>
+<g style="font-size: 11; font-color:gray;">
+<text x="114" y="32">email</text>
+</g>
+</svg>

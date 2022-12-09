@@ -1,0 +1,94 @@
+<svg:svg baseProfile="full" id="SVG"
+	onload="Initialize(evt)" width="675" height="375" viewBox="0 0 675 375">
+	<script type="text/ecmascript" xlink:href="jscript/svgCore.js"/>
+	<script type="text/ecmascript"> 
+	<![CDATA[ 
+	function Initialize(LoadEvent) {
+		if (typeof svg != 'undefined') {
+			svg.initialize(LoadEvent);
+		}
+	}
+	]]>
+	</script>
+
+	<svg:defs>
+		<svg:filter id="3D-look">
+			<!--Drop Shadow-->
+			<svg:feGaussianBlur result="blur" stdDeviation="2" in="SourceAlpha" />
+			<svg:feOffset result="offsetBlur" dy="2" dx="2" in="blur" />
+			<!--Emboss-->
+			<svg:feSpecularLighting kernelUnitLength="1" result="spec" specularExponent="40" specularConstant="1"
+				style="lighting-color:white" surfaceScale="-1" in="blur">
+				<svg:feDistantLight elevation="45" azimuth="45" />
+			</svg:feSpecularLighting>
+			<svg:feMerge>
+				<svg:feMergeNode in="offsetBlur" />
+				<svg:feMergeNode in="SourceGraphic" />
+				<svg:feMergeNode in="spec" />
+			</svg:feMerge>
+		</svg:filter>
+		<svg:filter id="shadow">
+			<!--Drop Shadow-->
+			<svg:feGaussianBlur result="blur" stdDeviation="2" in="SourceAlpha" />
+			<svg:feOffset result="offsetBlur" dy="4" dx="4" in="blur" />
+			<svg:feMerge>
+				<svg:feMergeNode in="offsetBlur" />
+				<svg:feMergeNode in="SourceGraphic" />
+			</svg:feMerge>
+		</svg:filter>
+		<svg:filter id="emboss">
+			<!--Emboss-->
+			<svg:feSpecularLighting kernelUnitLength="1" result="spec" specularExponent="40" specularConstant="1"
+				style="lighting-color:white" surfaceScale="-1" in="SourceAlpha">
+				<svg:feDistantLight elevation="45" azimuth="45" />
+			</svg:feSpecularLighting>
+			<svg:feMerge>
+				<svg:feMergeNode in="SourceGraphic" />
+				<svg:feMergeNode in="spec" />
+			</svg:feMerge>
+		</svg:filter>
+	</svg:defs>
+	<svg:defs>
+		<svg:linearGradient id="blue2white">
+			<svg:stop style="stop-color: #99bbee" offset="0%" />
+			<svg:stop style="stop-color: white" offset="100%" />
+		</svg:linearGradient>
+		<svg:linearGradient y2="100%" x2="0%" y1="0%" x1="0%" xlink:href="#blue2white" id="b2w-down" />
+		<svg:linearGradient y2="0%" x2="0%" y1="100%" x1="0%" xlink:href="#blue2white" id="b2w-up" />
+		<svg:linearGradient y2="0%" x2="0%" y1="0%" x1="100%" xlink:href="#blue2white" id="b2w-right2left" />
+		<svg:linearGradient y2="0%" x2="100%" y1="0%" x1="0%" xlink:href="#blue2white" id="b2w-left2right" />
+		<svg:linearGradient y2="100%" x2="100%" y1="0%" x1="0%" xlink:href="#blue2white" id="b2w-diagonal" />
+	</svg:defs>
+
+	<!--Add gradient background coloring-->
+	<svg:rect x="0" y="0" width="100%" height="100%" rx="5" style="fill: url(#b2w-down)" />
+
+	<!--Draw the chart and position it at the chart origin-->
+	<svg:g transform="translate(35, 50)">
+		<!--Make a white drawing area for the graph-->
+		<svg:rect x="0" y="0" width="500" height="250" style="fill: white" />
+		<!--Draw X/Y axes-->
+		<svg:g style="stroke-linecap: round; stroke-linejoin: round;">
+			<svg:g style="stroke:black; stroke-width:3;">
+				<!--Draw the main Y axis-->
+				<svg:line x1="0" y1="0" x2="0" y2="250" />
+				<!--Draw the main X axis-->
+				<svg:line x1="0" y1="250" x2="500" y2="250" />
+			</svg:g>
+			<svg:g style="stroke: #B0B0B0; stroke-width:.5; stroke-dasharray:9 5;">
+				<!--Top line-->
+				<svg:line x1="3" y1="0" x2="500" y2="0" />
+				<!--Halfway line-->
+				<svg:line x1="3" y1="125" x2="500" y2="125" />
+			</svg:g>
+			<svg:g style="stroke: #B0B0B0; stroke-width:.5; stroke-dasharray:4 4;">
+				<!--3/4 line-->
+				<svg:line x1="3" y1="63" x2="500" y2="63" />
+				<!--1/4 line-->
+				<svg:line x1="3" y1="188" x2="500" y2="188" />
+			</svg:g>
+		</svg:g>
+	</svg:g>
+
+	<svg:g id="svgBase" />
+</svg:svg>

@@ -1,0 +1,661 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:svg="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Simple SVG test</title>
+
+
+<script src="jscript/prototype-1.5.0.js" type="text/javascript"></script>
+<script type="text/javascript">
+	//	The prototype version of window.onload=function(){};
+	Event.observe(window, 'load', function() {
+		SVGChart.setTitle($F('title'));
+		SVGChart.setYLabel($F('ytitle'), $F('ymin'), $F('ymax'));
+//		SVGChart.setXLabel($F('xtitle'), ["aaa", "bbb", "ccc", "ddd", "eee", "fff", "ddd", "eee", "fff", "ggg", "hhh", "iii", "jjj", "kkk", "lll", "mmm", "nnn", "ooo", "ppp", "qqq", "rrr", "sss", "ttt", "uuu", "vvv", "www", "xxx", "yyy", "zzz"]);
+//		SVGChart.setXLabel($F('xtitle'), ["01:00:00","02:00:00","03:00:00","04:00:00","05:00:00","06:00:00","07:00:00","08:00:00","09:00:00","10:00:00","11:00:00","12:00:00","13:00:00","14:00:00","15:00:00","16:00:00","17:00:00","18:00:00","19:00:00","20:00:00","21:00:00","22:00:00","23:00:00","00:00:00"]);
+//		SVGChart.setXLabel($F('xtitle'), ["aaa", "bbb", "ccc", "aaa", "bbb", "ccc", "aaa", "bbb", "ccc" ]);
+		setX(3);
+//		chartDataGroup("srmdev1", 2, 3, 4, "bar");
+//		chartDataGroup("srmweb2", 2, 3, 4, "line");
+		
+		svgEvents.initialize();
+
+		/* The prototype way to register events is using the Event.observe instead of defining
+		 * the events in each HTML object. However, when I do this, it all works will in Firefox, 
+		 * but nothing works in IE.  So, until I figure out the problem, I've move the event handler
+		 * definitions back to the HTML code 
+		 *
+		Event.observe('title', 'change', function() { SVGChart.setTitle($F('title')); } );
+		Event.observe('ytitle', 'change', function() { SVGChart.setYLabel($F('ytitle'), $F('ymin'), $F('ymax')); } );
+		Event.observe('ymin', 'change', function() { SVGChart.setYLabel($F('ytitle'), $F('ymin'), $F('ymax')); } );
+		Event.observe('ymax', 'change', function() { SVGChart.setYLabel($F('ytitle'), $F('ymin'), $F('ymax')); } );
+		Event.observe('xtitle', 'change', function() { SVGChart.setXLabel($F('xtitle'), []); } );
+
+		Event.observe('zoomIn', 'click', function() { svgEvents.zoom('in'); } );
+		Event.observe('zoomOut', 'click', function() { svgEvents.zoom('out'); } );
+		
+		Event.observe('chart', 'click', function() { chartDataGroup($F('server'), 2, 3, 4, $F('type')); } );
+		Event.observe('dechart', 'click', function() { SVGChart.removeDataGroup($F('server')); } );
+				
+		Event.observe('panUp', 'click', function() { svgEvents.pan('up'); } );
+		Event.observe('panDown', 'click', function() { svgEvents.pan('down'); } );
+		Event.observe('panLeft', 'click', function() { svgEvents.pan('left'); } );
+		Event.observe('panRight', 'click', function() { svgEvents.pan('right'); } );
+		Event.observe('origin', 'click', function() { svgEvents.pan('origin'); } );
+		*/
+	});
+	
+function setX(xMetricColumn) {
+	var table = $('dataTable');
+	if (table === null) { return; }
+
+	var dataItems = [];
+	for (var i = 1; i < table.rows.length - 1; i++) {
+		// if currently visible
+		if (table.rows[i].style.display == "") {
+			var xMetricValue = table.rows[i].cells[xMetricColumn].attributes.value.value;
+			dataItems.push(xMetricValue);
+		}
+	}
+	SVGChart.setXLabel($F('xtitle'), dataItems);
+}
+	
+function chartDataGroup(groupName, groupColumn, xMetricColumn, yMetricColumn, chartType) {
+	var table = $('dataTable');
+	if (table === null) { return; }
+
+	var dataItems = [];
+	for (var i = 1; i < table.rows.length - 1; i++) {
+		// if currently visible
+		if (table.rows[i].style.display == "") {
+			var cellGroupValue = table.rows[i].cells[groupColumn].innerHTML;
+			if (cellGroupValue == groupName) {
+				var idValue = table.rows[i].cells[0].innerHTML;
+				var xMetricValue = table.rows[i].cells[xMetricColumn].attributes.value.value;
+				var yMetricValue = parseFloat(table.rows[i].cells[yMetricColumn].attributes.value.value);
+				var dataItem = {'id' : idValue, 'x' : xMetricValue, 'y': yMetricValue};
+				dataItems.push(dataItem);
+			}
+		}
+	}
+	SVGChart.chartData(chartType, groupName, dataItems);
+}	
+	
+	
+</script>
+<script type="text/javascript" src="jscript/svgEvents.js"></script>
+<script type="text/javascript" src="jscript/svgChart.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="css/slider.css" />
+<script src="jscript/slider.js" type='text/JavaScript'></script>
+<style type="text/css">
+fieldset {
+	-moz-border-radius: 8px;
+	padding: 1px;
+}
+#svgNav {
+	overflow: hidden;
+	width: 60px;
+	height: 346px;
+	float: left;
+	vertical-align: top;
+	z-index: 10;
+}
+th {
+	text-align: left;
+	}
+</style>
+<!-- Make IE associate the svg namespace with the SVG viewer -->
+<object id="AdobeSVG" classid="clsid:78156a80-c6a1-4bbf-8e6a-3cd390eeb4e2"></object>
+<?import namespace="svg" implementation="#AdobeSVG"?>
+
+</head>
+<body>
+
+<div id="svgNav" name="svgNav">
+<table border="0">
+	<tr>
+		<td>&nbsp;</td>
+		<td><img src="images/navigation/up.gif" alt="&uarr;" id="panUp" title="Move Up" onclick="svgEvents.pan('up');" /></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td><img src="images/navigation/left.gif" alt="&larr;" id="panLeft" title="Move Left"
+			onclick="svgEvents.pan('left');" /></td>
+		<td><img src="images/navigation/origin.gif" alt="&otimes" id="origin" title="Original"
+			onclick="svgEvents.pan('origin');" /></td>
+		<td><img src="images/navigation/right.gif" alt="&rarr;" id="panRight" title="Move Right"
+			onclick="svgEvents.pan('right');" /></td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><img src="images/navigation/down.gif" alt="&darr;" id="panDown" title="Move Down"
+			onclick="svgEvents.pan('down');" /></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><img src="images/navigation/in.gif" alt="+" title="Zoom In" id="zoomIn" onclick="svgEvents.zoom('in');" /></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td>
+		<div class="carpe_vertical_slider_display_combo">
+		<div class="carpe_vertical_slider_track" style="height: 100px;">
+		<div class="carpe_slider_slit">&nbsp;</div>
+		<div class="carpe_slider" id="zoomSlider" from="1" to="100" valuecount="100" value="10" distance="100"
+			style="top: 90px;">&nbsp;</div>
+		</div>
+		</div>
+		</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><img src="images/navigation/out.gif" alt="-" title="Zoom Out" id="zoomOut" onclick="svgEvents.zoom('out');" /></td>
+		<td>&nbsp;</td>
+	</tr>
+</table>
+</div>
+<fieldset style="width: 350px;"><!-- This would be the prefered method, but it doesn't work in IE
+<object type="image/svg+xml" name="svgChart"
+	data="blankChart.svg" width="675" height="375">
+</object>
+--> <!-- the embed tag is technically an unsupported tag and the specs say to use the object
+      tag.  Unfortunately, IE doesn't support the object tag, so we have to use it. --> <embed
+	codebase="http://www.adobe.com/svg/viewer/install/" classid="clsid:78156a80-c6a1-4bbf-8e6a-3cd390eeb4e2"
+	pluginspage="http://www.adobe.com/svg/viewer/install/" src="blankChart.svg" width="675" height="375"
+	type="image/svg+xml" name="embeddedSVG"></embed></fieldset>
+
+<p style="clear:both; ">&nbsp;</p>
+<fieldset style="float:right"><legend onclick="$('sourceDiv').value = svg.serialize();">SVG Source (click)</legend><textarea rows="10" cols="80" id="sourceDiv"></textarea></fieldset>
+<fieldset style="width: 250px;"><legend>Chart Parameters</legend>
+<table>
+	<tr>
+		<th>Chart Title</th>
+		<td><input type="text" id="title" value="My Chart" onchange="SVGChart.setTitle($F('title'))" /></td>
+	</tr>
+	<tr>
+		<th>Y-Axis Label</th>
+		<td><input type="text" id="ytitle" value="Percentage"
+			onchange="SVGChart.setYLabel($F('ytitle'), $F('ymin'), $F('ymax'));" /></td>
+	</tr>
+	<tr>
+		<th>Y-Axis Minimum</th>
+		<td><input type="text" id="ymin" value="0" onchange="SVGChart.setYLabel($F('ytitle'), $F('ymin'), $F('ymax'));" /></td>
+	</tr>
+	<tr>
+		<th>Y-Axis Maximum</th>
+		<td><input type="text" id="ymax" value="100" onchange="SVGChart.setYLabel($F('ytitle'), $F('ymin'), $F('ymax'));" /></td>
+	</tr>
+	<tr>
+		<th>X-Axis Label</th>
+		<td><input type="text" id="xtitle" value="Time" onchange="SVGChart.setXLabel($F('xtitle'), []);" /></td>
+	</tr>
+	<tr>
+		<th>Chart Data</th>
+		<td><input type="text" id="server" value="srmdev1" /> <select id="type" value="bar">
+			<option value="bar">Bar</option>
+			<option value="line">Line</option>
+		</select> <input type="button" id="chart" value="Chart It" onclick="chartDataGroup($F('server'), 2, 3, 4, $F('type'));" /> <input
+			type="button" id="dechart" value="Remove" onclick="SVGChart.removeDataGroup($F('server'));" /></td>
+	</tr>
+</table>
+</fieldset>
+
+<table class="" id="dataTable" border="1">
+	<thead>
+		<tr class="blue-med-dark">
+			<td style="display: none;">1</td>
+			<th>date</th>
+			<th>display_name</th>
+			<th>time</th>
+			<th>processor_busy</th>
+			<th>processor_busy_threshold</th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr class="blue-med-dark">
+			<td colspan="6">Row Count: 48</td>
+		</tr>
+	</tfoot>
+	<tbody>
+		<tr onmouseover="window.select('id0x115f9438')" onmouseout="window.deselect('id0x115f9438')">
+			<td style="display: none;">id0x115f9438</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmweb2">srmweb2</td>
+			<td value="11:00:00">11:00:00 AM</td>
+			<td style="text-align: right;" value="25.03">25.03</td>
+			<td style="text-align: right;" value="25" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">25</td>
+		</tr>
+		<tr onmouseover="window.select('id0x096c0e38')" onmouseout="window.deselect('id0x096c0e38')">
+			<td style="display: none;">id0x096c0e38</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmweb2">srmweb2</td>
+			<td value="05:00:00">5:00:00 AM</td>
+			<td style="text-align: right;" value="0.08">0.08</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x09346550')" onmouseout="window.deselect('id0x09346550')">
+			<td style="display: none;">id0x09346550</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmweb2">srmweb2</td>
+			<td value="00:00:00">12:00:00 AM</td>
+			<td style="text-align: right;" value="0.12">0.12</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x0a15ddd0')" onmouseout="window.deselect('id0x0a15ddd0')">
+			<td style="display: none;">id0x0a15ddd0</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmweb2">srmweb2</td>
+			<td value="22:00:00">10:00:00 PM</td>
+			<td style="text-align: right;" value="0.58">0.58</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x0931c698')" onmouseout="window.deselect('id0x0931c698')">
+			<td style="display: none;">id0x0931c698</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmweb2">srmweb2</td>
+			<td value="04:00:00">4:00:00 AM</td>
+			<td style="text-align: right;" value="0.55">0.55</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x08f9ae58')" onmouseout="window.deselect('id0x08f9ae58')">
+			<td style="display: none;">id0x08f9ae58</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmweb2">srmweb2</td>
+			<td value="08:00:00">8:00:00 AM</td>
+			<td style="text-align: right;" value="0.12">0.12</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x09152d90')" onmouseout="window.deselect('id0x09152d90')">
+			<td style="display: none;">id0x09152d90</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmweb2">srmweb2</td>
+			<td value="09:00:00">9:00:00 AM</td>
+			<td style="text-align: right;" value="0.13">0.13</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x07bf5648')" onmouseout="window.deselect('id0x07bf5648')">
+			<td style="display: none;">id0x07bf5648</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmweb2">srmweb2</td>
+			<td value="01:00:00">1:00:00 AM</td>
+			<td style="text-align: right;" value="0.08">0.08</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x09a89a90')" onmouseout="window.deselect('id0x09a89a90')">
+			<td style="display: none;">id0x09a89a90</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmweb2">srmweb2</td>
+			<td value="02:00:00">2:00:00 AM</td>
+			<td style="text-align: right;" value="0.67">0.67</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x0931a460')" onmouseout="window.deselect('id0x0931a460')">
+			<td style="display: none;">id0x0931a460</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmweb2">srmweb2</td>
+			<td value="18:00:00">6:00:00 PM</td>
+			<td style="text-align: right;" value="0.17">0.17</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x0827d110')" onmouseout="window.deselect('id0x0827d110')">
+			<td style="display: none;">id0x0827d110</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmweb2">srmweb2</td>
+			<td value="20:00:00">8:00:00 PM</td>
+			<td style="text-align: right;" value="0.15">0.15</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x08f39d38')" onmouseout="window.deselect('id0x08f39d38')">
+			<td style="display: none;">id0x08f39d38</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmweb2">srmweb2</td>
+			<td value="14:00:00">2:00:00 PM</td>
+			<td style="text-align: right;" value="1.32">1.32</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x1184c470')" onmouseout="window.deselect('id0x1184c470')">
+			<td style="display: none;">id0x1184c470</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmweb2">srmweb2</td>
+			<td value="12:00:00">12:00:00 PM</td>
+			<td style="text-align: right;" value="0.12">0.12</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x121fb008')" onmouseout="window.deselect('id0x121fb008')">
+			<td style="display: none;">id0x121fb008</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmweb2">srmweb2</td>
+			<td value="13:00:00">1:00:00 PM</td>
+			<td style="text-align: right;" value="0.13">0.13</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x11ea08c0')" onmouseout="window.deselect('id0x11ea08c0')">
+			<td style="display: none;">id0x11ea08c0</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmweb2">srmweb2</td>
+			<td value="19:00:00">7:00:00 PM</td>
+			<td style="text-align: right;" value="0.15">0.15</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x10f4d4e0')" onmouseout="window.deselect('id0x10f4d4e0')">
+			<td style="display: none;">id0x10f4d4e0</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmweb2">srmweb2</td>
+			<td value="15:00:00">3:00:00 PM</td>
+			<td style="text-align: right;" value="0.17">0.17</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x09f84560')" onmouseout="window.deselect('id0x09f84560')">
+			<td style="display: none;">id0x09f84560</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmweb2">srmweb2</td>
+			<td value="21:00:00">9:00:00 PM</td>
+			<td style="text-align: right;" value="0.2">0.2</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x118deee0')" onmouseout="window.deselect('id0x118deee0')">
+			<td style="display: none;">id0x118deee0</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmweb2">srmweb2</td>
+			<td value="03:00:00">3:00:00 AM</td>
+			<td style="text-align: right;" value="0.12">0.12</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x12326568')" onmouseout="window.deselect('id0x12326568')">
+			<td style="display: none;">id0x12326568</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmweb2">srmweb2</td>
+			<td value="16:00:00">4:00:00 PM</td>
+			<td style="text-align: right;" value="0.18">0.18</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x08de9590')" onmouseout="window.deselect('id0x08de9590')">
+			<td style="display: none;">id0x08de9590</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmweb2">srmweb2</td>
+			<td value="06:00:00">6:00:00 AM</td>
+			<td style="text-align: right;" value="0.27">0.27</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x12338728')" onmouseout="window.deselect('id0x12338728')">
+			<td style="display: none;">id0x12338728</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmweb2">srmweb2</td>
+			<td value="23:00:00">11:00:00 PM</td>
+			<td style="text-align: right;" value="0.32">0.32</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x0a32a100')" onmouseout="window.deselect('id0x0a32a100')">
+			<td style="display: none;">id0x0a32a100</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmweb2">srmweb2</td>
+			<td value="07:00:00">7:00:00 AM</td>
+			<td style="text-align: right;" value="0.05">0.05</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x110dc338')" onmouseout="window.deselect('id0x110dc338')">
+			<td style="display: none;">id0x110dc338</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmweb2">srmweb2</td>
+			<td value="17:00:00">5:00:00 PM</td>
+			<td style="text-align: right;" value="0.17">0.17</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x098b1570')" onmouseout="window.deselect('id0x098b1570')">
+			<td style="display: none;">id0x098b1570</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmweb2">srmweb2</td>
+			<td value="10:00:00">10:00:00 AM</td>
+			<td style="text-align: right;" value="0.53">0.53</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x0a12d908')" onmouseout="window.deselect('id0x0a12d908')">
+			<td style="display: none;">id0x0a12d908</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmdev1">srmdev1</td>
+			<td value="01:00:00">1:00:00 AM</td>
+			<td style="text-align: right;" value="1.92">1.92</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x094d5ac0')" onmouseout="window.deselect('id0x094d5ac0')">
+			<td style="display: none;">id0x094d5ac0</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmdev1">srmdev1</td>
+			<td value="23:00:00">11:00:00 PM</td>
+			<td style="text-align: right;" value="18.43">18.43</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x11f6e0c0')" onmouseout="window.deselect('id0x11f6e0c0')">
+			<td style="display: none;">id0x11f6e0c0</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmdev1">srmdev1</td>
+			<td value="14:00:00">2:00:00 PM</td>
+			<td style="text-align: right;" value="6.88">6.88</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x121fcc10')" onmouseout="window.deselect('id0x121fcc10')">
+			<td style="display: none;">id0x121fcc10</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmdev1">srmdev1</td>
+			<td value="09:00:00">9:00:00 AM</td>
+			<td style="text-align: right;" value="5.52">5.52</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x07bb23f0')" onmouseout="window.deselect('id0x07bb23f0')">
+			<td style="display: none;">id0x07bb23f0</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmdev1">srmdev1</td>
+			<td value="00:00:00">12:00:00 AM</td>
+			<td style="text-align: right;" value="2.47">2.47</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x0afc1f18')" onmouseout="window.deselect('id0x0afc1f18')">
+			<td style="display: none;">id0x0afc1f18</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmdev1">srmdev1</td>
+			<td value="21:00:00">9:00:00 PM</td>
+			<td style="text-align: right;" value="23.95">23.95</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x09b5aca8')" onmouseout="window.deselect('id0x09b5aca8')">
+			<td style="display: none;">id0x09b5aca8</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmdev1">srmdev1</td>
+			<td value="08:00:00">8:00:00 AM</td>
+			<td style="text-align: right;" value="2.18">2.18</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x0963d648')" onmouseout="window.deselect('id0x0963d648')">
+			<td style="display: none;">id0x0963d648</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmdev1">srmdev1</td>
+			<td value="03:00:00">3:00:00 AM</td>
+			<td style="text-align: right;" value="2.13">2.13</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x0807d878')" onmouseout="window.deselect('id0x0807d878')">
+			<td style="display: none;">id0x0807d878</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmdev1">srmdev1</td>
+			<td value="12:00:00">12:00:00 PM</td>
+			<td style="text-align: right;" value="5.12">5.12</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x0986a990')" onmouseout="window.deselect('id0x0986a990')">
+			<td style="display: none;">id0x0986a990</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmdev1">srmdev1</td>
+			<td value="22:00:00">10:00:00 PM</td>
+			<td style="text-align: right;" value="20.23">20.23</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x10a15008')" onmouseout="window.deselect('id0x10a15008')">
+			<td style="display: none;">id0x10a15008</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmdev1">srmdev1</td>
+			<td value="13:00:00">1:00:00 PM</td>
+			<td style="text-align: right;" value="6.3">6.3</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x124d0640')" onmouseout="window.deselect('id0x124d0640')">
+			<td style="display: none;">id0x124d0640</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmdev1">srmdev1</td>
+			<td value="17:00:00">5:00:00 PM</td>
+			<td style="text-align: right;" value="15.22">15.22</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x093447c0')" onmouseout="window.deselect('id0x093447c0')">
+			<td style="display: none;">id0x093447c0</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmdev1">srmdev1</td>
+			<td value="19:00:00">7:00:00 PM</td>
+			<td style="text-align: right;" value="4.28">4.28</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x09c6b810')" onmouseout="window.deselect('id0x09c6b810')">
+			<td style="display: none;">id0x09c6b810</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmdev1">srmdev1</td>
+			<td value="04:00:00">4:00:00 AM</td>
+			<td style="text-align: right;" value="2.65">2.65</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x09650268')" onmouseout="window.deselect('id0x09650268')">
+			<td style="display: none;">id0x09650268</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmdev1">srmdev1</td>
+			<td value="15:00:00">3:00:00 PM</td>
+			<td style="text-align: right;" value="2.58">2.58</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x11ea5078')" onmouseout="window.deselect('id0x11ea5078')">
+			<td style="display: none;">id0x11ea5078</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmdev1">srmdev1</td>
+			<td value="11:00:00">11:00:00 AM</td>
+			<td style="text-align: right;" value="6.77">6.77</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x1226f888')" onmouseout="window.deselect('id0x1226f888')">
+			<td style="display: none;">id0x1226f888</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmdev1">srmdev1</td>
+			<td value="20:00:00">8:00:00 PM</td>
+			<td style="text-align: right;" value="19.38">19.38</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x07cb9280')" onmouseout="window.deselect('id0x07cb9280')">
+			<td style="display: none;">id0x07cb9280</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmdev1">srmdev1</td>
+			<td value="02:00:00">2:00:00 AM</td>
+			<td style="text-align: right;" value="3.48">3.48</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x11f951c0')" onmouseout="window.deselect('id0x11f951c0')">
+			<td style="display: none;">id0x11f951c0</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmdev1">srmdev1</td>
+			<td value="10:00:00">10:00:00 AM</td>
+			<td style="text-align: right;" value="4.15">4.15</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x07557f90')" onmouseout="window.deselect('id0x07557f90')">
+			<td style="display: none;">id0x07557f90</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmdev1">srmdev1</td>
+			<td value="07:00:00">7:00:00 AM</td>
+			<td style="text-align: right;" value="7.58">7.58</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x0a169538')" onmouseout="window.deselect('id0x0a169538')">
+			<td style="display: none;">id0x0a169538</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmdev1">srmdev1</td>
+			<td value="06:00:00">6:00:00 AM</td>
+			<td style="text-align: right;" value="2.15">2.15</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x098dec30')" onmouseout="window.deselect('id0x098dec30')">
+			<td style="display: none;">id0x098dec30</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmdev1">srmdev1</td>
+			<td value="18:00:00">6:00:00 PM</td>
+			<td style="text-align: right;" value="2.07">2.07</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x084e0170')" onmouseout="window.deselect('id0x084e0170')">
+			<td style="display: none;">id0x084e0170</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmdev1">srmdev1</td>
+			<td value="16:00:00">4:00:00 PM</td>
+			<td style="text-align: right;" value="6.98">6.98</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+		<tr onmouseover="window.select('id0x118e4aa8')" onmouseout="window.deselect('id0x118e4aa8')">
+			<td style="display: none;">id0x118e4aa8</td>
+			<td value="2007-01-29">Thursday, March 01, 2007</td>
+			<td value="srmdev1">srmdev1</td>
+			<td value="05:00:00">5:00:00 AM</td>
+			<td style="text-align: right;" value="0.48">0.48</td>
+			<td style="text-align: right;" value="0" class="metricGreen"><img
+				style="float: right; padding-top: 5px; padding-left: 5px;" src="images/icon-system-status-ok.gif" alt="">0</td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+</body>
+</html>

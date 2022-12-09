@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<svg stroke-width="20" stroke="black" xmlns="http://www.w3.org/2000/svg"
+ xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1024 768" >
+ 
+<script>
+document.documentElement.addEventListener("DOMMouseScroll",resizeCircle,false)
+
+function resizeCircle(evt){
+
+if(evt.detail&lt;0){
+evt.target.r.baseVal.value+=20
+
+}else{
+
+evt.target.r.baseVal.value-=20
+
+}
+}
+</script>
+<circle cx="100" cy="100" r="50"  fill="red"/>
+<circle cx="200" cy="200" r="50"  fill="green"/>
+<circle cx="300" cy="100" r="50"  fill="blue"/>
+</svg>

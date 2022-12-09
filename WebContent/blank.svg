@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="full" id="SVG"
+	onload="Initialize(evt)" width="600" height="375" viewBox="0 0 600 375">
+	<script type="text/ecmascript" xlink:href="jscript/svgCore.js"/>
+	<script type="text/ecmascript"> 
+	<![CDATA[ 
+	function Initialize(LoadEvent) {
+		svg.initialize(LoadEvent);
+	}
+	]]>
+	</script>
+
+	<defs>
+		<linearGradient id="blue2white">
+			<stop style="stop-color: #99bbee" offset="0%" />
+			<stop style="stop-color: white" offset="100%" />
+		</linearGradient>
+		<linearGradient y2="100%" x2="0%" y1="0%" x1="0%" xlink:href="#blue2white" id="b2w-down" />
+		<linearGradient y2="0%" x2="0%" y1="100%" x1="0%" xlink:href="#blue2white" id="b2w-up" />
+		<linearGradient y2="0%" x2="0%" y1="0%" x1="100%" xlink:href="#blue2white" id="b2w-right2left" />
+		<linearGradient y2="0%" x2="100%" y1="0%" x1="0%" xlink:href="#blue2white" id="b2w-left2right" />
+		<linearGradient y2="100%" x2="100%" y1="0%" x1="0%" xlink:href="#blue2white" id="b2w-diagonal" />
+	</defs>
+	
+	<!--Add gradient background coloring-->
+	<rect x="0" y="0" width="100%" height="100%" style="fill: url(#b2w-down)"/>
+
+	<g id="svgBase" />
+</svg>

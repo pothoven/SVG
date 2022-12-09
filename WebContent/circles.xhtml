@@ -1,0 +1,181 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:svg="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Simple SVG test</title>
+
+
+<script type="text/javascript">
+	var svg = {};
+	
+	window.onload=function(){
+		if (typeof svg.svgDocument == "undefined") {
+			console.log("svg object not created in SVG");
+			var svgDocument = document.getElementById("SVG").getSVGDocument();
+			svg = {'svgDocument' : svgDocument,
+				   'rootNode' : svgDocument.rootElement,
+				   'baseNode' : svgDocument.getElementById("svgBase")};
+		}
+		// enable mouse events
+		svgEvents.initialize();
+
+		console.dir(svg);
+    };
+
+
+parent.document.removeCircle = removeCircle;
+
+function addCircle(x,y,radius,color,id) {
+	removeCircle(id);
+	if (typeof svg.svgDocument.createElementNS != "undefined") {
+		var circleElem = svg.svgDocument.createElementNS('http://www.w3.org/2000/svg', 'circle');
+	} else {
+		console.dir(svg.svgDocument);
+		var circleElem = svg.svgDocument.createElement('svg:circle');
+	    console.dir(circleElem);
+//		circleElem.setAttribute("_svg_peer", new SVGCircleElement());
+	}
+	circleElem.setAttribute("fill-opacity", "0.7");
+	circleElem.setAttribute("stroke", "black");
+	circleElem.setAttribute("stroke-width", "0.1cm");
+	circleElem.setAttribute("cx", x);
+	circleElem.setAttribute("cy", y);
+	circleElem.setAttribute("r", radius);
+	circleElem.setAttribute("fill", color);
+	circleElem.setAttribute("id", id);
+	circleElem.setAttribute("onmouseover", "parent.document.select('"+id+"')");
+	circleElem.setAttribute("onmouseout", "parent.document.deselect('"+id+"')");
+	circleElem.setAttribute("onclick", "parent.document.removeCircle('"+id+"')");
+    svg.baseNode.appendChild(circleElem);
+    
+}
+
+
+function removeCircle(circleId) {
+	var circleElem = svg.svgDocument.getElementById(circleId);
+	if (circleElem) {
+		svg.baseNode.removeChild(circleElem);
+	}
+}
+
+</script>
+<script type="text/javascript" src="jscript/svgEvents.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="css/slider.css" />
+<script src="jscript/slider.js" type='text/JavaScript'></script>
+<script src="jscript/firebug/firebug.js" type='text/JavaScript'></script>
+<style type="text/css">
+fieldset {
+	-moz-border-radius: 8px;
+}
+#svgNav {
+	overflow: hidden;
+	width: 60px;
+	height: 346px;
+	float: left;
+	vertical-align: top;
+	z-index: 10;
+}
+</style>
+<!-- Make IE associate the svg namespace with the SVG viewer -->
+<object id="AdobeSVG" classid="clsid:78156a80-c6a1-4bbf-8e6a-3cd390eeb4e2"></object>
+<?import namespace="svg" implementation="#AdobeSVG"?>
+
+</head>
+<body>
+
+<div id="svgNav" name="svgNav">
+<table border="0">
+	<tr>
+		<td>&#160;</td>
+		<td><img src="images/navigation/up.gif" alt="&#8593;" title="Move Up" onclick="svgEvents.pan('up')" /></td>
+		<td>&#160;</td>
+	</tr>
+	<tr>
+		<td><img src="images/navigation/left.gif" alt="&#8592;" title="Move Left" onclick="svgEvents.pan('left')" /></td>
+		<td><img src="images/navigation/origin.gif" alt="&#8855;" title="Original" onclick="svgEvents.pan('origin')" /></td>
+		<td><img src="images/navigation/right.gif" alt="&#8594;" title="Move Right" onclick="svgEvents.pan('right')" /></td>
+	</tr>
+	<tr>
+		<td>&#160;</td>
+		<td><img src="images/navigation/down.gif" alt="&#8595;" title="Move Down" onclick="svgEvents.pan('down')" /></td>
+		<td>&#160;</td>
+	</tr>
+	<tr>
+		<td>&#160;</td>
+		<td><img src="images/navigation/in.gif" alt="+" title="Zoom In" onclick="window.zoom('in')" /></td>
+		<td>&#160;</td>
+	</tr>
+	<tr>
+		<td>&#160;</td>
+		<td>
+		<div class="carpe_vertical_slider_display_combo">
+		<div class="carpe_vertical_slider_track" style="height: 100px;">
+		<div class="carpe_slider_slit">&#160;</div>
+		<div class="carpe_slider" id="zoomSlider" from="1" to="100" valuecount="100" value="10" distance="100"
+			style="top: 90px;">&#160;</div>
+		</div>
+		</div>
+		</td>
+		<td>&#160;</td>
+	</tr>
+	<tr>
+		<td>&#160;</td>
+		<td><img src="images/navigation/out.gif" alt="-" title="Zoom Out" onclick="window.zoom('out')" /></td>
+		<td>&#160;</td>
+	</tr>
+</table>
+</div>
+<div id="chart">
+<fieldset style="width: 600px;"><!-- This would be the prefered method, but it doesn't work in IE
+<object type="image/svg+xml" name="svgChart"
+	data="blank.svg" width="600" height="375">
+</object>
+ --> <!-- the embed tag is technically an unsupported tag and the specs say to use the object
+      tag.  Unfortunately, IE doesn't support the object tag, so we have to use it. 
+<embed codebase="http://www.adobe.com/svg/viewer/install/"
+	classid="clsid:78156a80-c6a1-4bbf-8e6a-3cd390eeb4e2"
+	pluginspage="http://www.adobe.com/svg/viewer/install/" src="blank.svg"
+	width="600" height="375" type="image/svg+xml" name="embeddedSVG"></embed> 
+-->
+ <svg:svg baseProfile="full" id="SVG" onload="Initialize(evt)" width="600" height="375" viewBox="0 0 600 375">
+	<svg:script type="text/ecmascript" xlink:href="jscript/svgCore.js"/>
+	<svg:script type="text/ecmascript"> 
+	<![CDATA[ 
+	function Initialize(LoadEvent) {
+		svg.initialize(LoadEvent);
+	}
+	]]>
+	</svg:script>
+
+	<svg:defs>
+		<svg:linearGradient id="blue2white">
+			<svg:stop style="stop-color: #99bbee" offset="0%" />
+			<svg:stop style="stop-color: white" offset="100%" />
+		</svg:linearGradient>
+		<svg:linearGradient y2="100%" x2="0%" y1="0%" x1="0%" xlink:href="#blue2white" id="b2w-down" />
+		<svg:linearGradient y2="0%" x2="0%" y1="100%" x1="0%" xlink:href="#blue2white" id="b2w-up" />
+		<svg:linearGradient y2="0%" x2="0%" y1="0%" x1="100%" xlink:href="#blue2white" id="b2w-right2left" />
+		<svg:linearGradient y2="0%" x2="100%" y1="0%" x1="0%" xlink:href="#blue2white" id="b2w-left2right" />
+		<svg:linearGradient y2="100%" x2="100%" y1="0%" x1="0%" xlink:href="#blue2white" id="b2w-diagonal" />
+	</svg:defs>
+
+	<!--Add gradient background coloring -->
+	<svg:rect x="0" y="0" width="100%" height="100%" style="fill: url(#b2w-down)" />
+
+	<svg:g id="svgBase">
+		<svg:circle cx="150" cy="100" r="50" fill="red" />
+	</svg:g>
+</svg:svg></fieldset>
+</div>
+<p style="clear:both; ">&#160;</p>
+<fieldset style="width: 250px;"><legend>Add</legend> <input type="button"
+	onclick="addCircle(284,145,100,'red','redcircle')" value="Red" /> <input type="button"
+	onclick="addCircle(214,245,100,'green','greencircle')" value="Green" /> <input type="button"
+	onclick="addCircle(354,245,100,'blue','bluecircle')" value="Blue" /></fieldset>
+<fieldset style="width: 250px;"><legend>Remove</legend> <input type="button"
+	onclick="removeCircle('redcircle')" value="Red" /> <input type="button" onclick="removeCircle('greencircle')"
+	value="Green" /> <input type="button" onclick="removeCircle('bluecircle')" value="Blue" /> </fieldset>
+<a onclick="document.getElementById('chart').style.display='none';">hide</a>
+<a onclick="document.getElementById('chart').style.display='';">show</a>
+</body>
+</html>

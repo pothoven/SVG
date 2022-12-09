@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="full"
+	width="850" height="350">
+	<g fill-opacity="0.7" stroke="black" stroke-width="0.1cm">
+		<circle cx="6cm" cy="2cm" r="100" fill="red"
+			transform="translate(0,50)" />
+	</g>
+	<g fill-opacity="0.7" stroke="black" stroke-width="0.1cm">
+		<circle cx="6cm" cy="2cm" r="100" fill="blue"
+			transform="translate(70,150)" />
+	</g>
+	<g fill-opacity="0.7" stroke="black" stroke-width="0.1cm">
+		<circle cx="6cm" cy="2cm" r="100" fill="green"
+			transform="translate(-70,150)" />
+	</g>
+</svg>
