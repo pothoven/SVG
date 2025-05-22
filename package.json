@@ -3,13 +3,14 @@
     "version": "0.1.0",
     "description": "Experiments with SVG charting",
     "author": "Steven Pothoven <steven@pothoven.net>",
-    "scripts" : {
-        "start": "npx http-server WebContent"
+    "scripts": {
+        "start": "http-server WebContent"
     },
     "repository": {
         "type": "git",
         "url": "https://github.com/pothoven/SVG"
     },
     "dependencies": {
+        "http-server": "^14.1.1"
     }
 }
